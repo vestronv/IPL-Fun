@@ -13,9 +13,10 @@ TEAM_IDS = []
 TIME_INTERVAL = 5   #in seconds
 
 root = Tk()
-w = Label(root, text="Welcome to IPL.")
-w1 = Label()
-w2 = Label()
+w = Label(root, text="Welcome to IPL\n",
+	fg = "white", bg = "dark blue", font = "Helvetica 16 bold")
+w1 = Label(fg = "white", bg = "dark blue", font = "Helvetica 10 bold")
+w2 = Label(fg = "white", bg = "dark blue", font = "Helvetica 10 bold")
 w.pack()
 w1.pack()
 w2.pack()
@@ -30,7 +31,6 @@ def get_ipl_ids() :
 	for match in get_data(URL) :
 		if match['t1'] in IPL_TEAMS :
 			TEAM_IDS.append(match['id'])
-	print TEAM_IDS
 
 def draw() :
 	for ids in TEAM_IDS:
@@ -39,11 +39,13 @@ def draw() :
 				#print 'running...'
 				summary = match_data['si']
 				current = match_data['de']
-				w1.config(text='SUMMARY : '+overall)
+				w1.config(text='SUMMARY : '+summary)
 				w2.config(text='SCORE : '+current)
 				root.after(1000,draw)
 
 if __name__ == '__main__':
+	root.resizable(width=False,height=False)
+	root.geometry('{}x{}'.format(500, 300))
 	get_ipl_ids()
 	draw()
 	root.mainloop()
